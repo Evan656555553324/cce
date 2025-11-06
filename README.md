@@ -1,5 +1,5 @@
 # CasteCore Engine
-![169fe12e-dfa8-4c68-9091-395795623a32-removalai-preview.png](https://i.postimg.cc/Rh75CbwD/169fe12e-dfa8-4c68-9091-395795623a32-removalai-preview.png)
+![](https://i.postimg.cc/7h4p7jDn/cce.png)
 #
 ![license](https://badgen.net/badge/License/GPL-3.0/blue?icon=opencollective)
 ![version](https://badgen.net/badge/Version/0.1.0/orange?icon=terminal)
