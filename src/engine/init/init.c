@@ -1,42 +1,58 @@
-#include <cce.h>
+#include <engine.h>
 #include <init.h>
 #include <string.h>
 #include <stdio.h>
 #include <GLFW/glfw3.h>
+#include <stdarg.h>
 
-static int cce_inited = 0;
+static int cce_initialized = 0;
+
+void cce_printf(const char* format, ...)
+{
+    printf("CCE | ");
+    va_list args;
+    va_start(args, format);
+    vprintf(format, args);
+    va_end(args);
+}
 
 int cce_engine_init(void)
 {
-    int retcode = 0;
+    if (cce_initialized)
+    {
+        cce_printf("⚠️ Engine already initialized\n");
+        return 0;
+    }
 
-    if ( cce_inited == 1 ) { return -1; }
-
-    printf("CCE | Initializing CCE engine with OpenGL...\n");
-
+    cce_printf("Initializing CCE with OpenGL...\n");
+    
     glfwInitHint(GLFW_WAYLAND_LIBDECOR, GLFW_FALSE);
     
-    if (glfwInit() != 1) {
-        fprintf(stderr, "CCE | ❌ Failed to initialize GLFW\n");
+    if (!glfwInit())
+    {
+        cce_printf("❌ Failed to initialize GLFW\n");
         return -1;
     }
     
-    printf("CCE | ✅ GLFW initialized successfully\n");
-
-    return retcode;
+    cce_initialized = 1;
+    cce_printf("✅ GLFW initialized successfully\n");
+    return 0;
 }
 
 void cce_engine_cleanup(void)
 {
-    if ( cce_inited == 0 ) { return; }
-
-    printf("CCE | Cleaning up CCE engine...\n");
-    glfwTerminate();
-    printf("CCE | ✅ Engine cleanup completed\n");
-
-    cce_inited = 0;
-
-    return;
+    cce_printf("Cleaning up CCE...\n");
+    
+    if (cce_initialized)
+    {
+        glfwTerminate();
+        cce_initialized = 0;
+        cce_printf("✅ Engine cleanup completed\n");
+    }
+    else
+    {
+        cce_printf("⚠️ Engine was not initialized\n");
+    }
 }
 
 int cce_get_version(char ** ver_str_ptr)

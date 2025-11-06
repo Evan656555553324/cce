@@ -13,17 +13,19 @@ int main(void)
     }
     
     Window* window = cce_window_create(1920, 1080, CCE_NAME " " CCE_VERSION " | " "OpenGL Window");
-    if (!window) {
+    if (!window)
+    {
         printf("❌ Window creation failed!\n");
         cce_engine_cleanup();
         return -1;
     }
     
     printf("✅ Window created successfully\n");
-    printf("🔵 You should see a BLUE window for 5 seconds...\n");
+    printf("🔵 You should see a window for 5 seconds...\n");
     
     int frames = 0;
-    while (!cce_window_should_close(window) && frames < 300) {
+    while (!cce_window_should_close(window) && frames < 300)
+    {
 
         cce_window_poll_events();
         
@@ -38,9 +40,8 @@ int main(void)
     
     printf("✅ Test completed after %d frames\n", frames);
     
-    // Очистка
     cce_window_destroy(window);
-    cce_engine_cleanup();
+    //cce_engine_cleanup();
     
     return 0;
 }

@@ -1,25 +1,23 @@
-# Compiler
 CC = gcc
 
-# Build directory (from root)
 BUILD_DIR = ../build
 INCLUDE_DIR = $(BUILD_DIR)/include
 LIB_DIR = $(BUILD_DIR)
 
-# Compiler flags for tests
 CFLAGS = -std=c99 -Wall -Wextra
-LDFLAGS = -L$(LIB_DIR) -I$(INCLUDE_DIR) -lcce -Wl,-rpath,$(LIB_DIR) -lGL -lglfw
+LDFLAGS = -L$(LIB_DIR) -I$(INCLUDE_DIR) -lcce -Wl,-rpath,$(LIB_DIR) -lGL -lglfw -lm
 
-# Test targets
 test-window:
-	$(CC) test_window/main.c $(LDFLAGS) -o $(BUILD_DIR)/test_window.out
-	$(BUILD_DIR)/test_window.out
+	$(CC) $@/main.c $(LDFLAGS) -o $@/$@.out
+	$@/$@.out
 
-# Run all tests
-test-all: test-window test-glfw-only test-minimal
+test-pixel-grid:
+	$(CC) $@/main.c $(LDFLAGS) -o $@/$@.out
+	$@/$@.out
 
-# Clean test binaries
+test-all: test-window test-pixel-grid
+
 clean:
-	rm -f $(BUILD_DIR)/test_*.out
+	rm -f test_window/test_*.out
 
-.PHONY: test-window test-glfw-only test-minimal test-all clean
+.PHONY: clean test-all test-window test-pixel-grid

@@ -24,7 +24,14 @@ void cce_window_destroy(Window* window);
 int cce_window_should_close(const Window* window);
 void cce_window_poll_events(void);
 void cce_window_swap_buffers(Window* window);
-
-// OpenGL контекст
 void cce_window_make_current(Window* window);
+
+/*
+    R E N D E R
+*/
+
+void cce_setup_2d_projection(int width, int height);
+void cce_draw_pixel(int x, int y, int size, float r, float g, float b);
+void cce_draw_pixel_grid(int pixel_size, int screen_width, int screen_height);
+
 #endif

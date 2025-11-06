@@ -1,73 +1,118 @@
-#include <cce.h>
-#include <window.h>
+#include <engine.h>
+#include <GLFW/glfw3.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <GLFW/glfw3.h>
+#include <string.h>
+#include <window.h>
 
 struct Window {
     GLFWwindow* handle;
     int width;
     int height;
-    const char* title;
+    char* title;
 };
 
-void cce_window_make_current(Window* window) {
-    if (window && window->handle) {
-        glfwMakeContextCurrent(window->handle);
-    }
-}
+static char* copy_string(const char* src)
+{
+    if (!src) return NULL;
+    
+    size_t len = strlen(src);
+    char* dest = malloc(len + 1);
+    if (!dest) return NULL;
+    
+    strcpy(dest, src);
 
-void cce_window_swap_buffers(Window* window) {
-    if (window && window->handle) {
-        glfwSwapBuffers(window->handle);
-    }
-}
-
-void cce_window_destroy(Window* window) {
-    if (window) {
-        printf("CCE | Destroying window: %s\n", window->title);
-        glfwDestroyWindow(window->handle);
-        free(window);
-    }
-}
-
-int cce_window_should_close(const Window* window) {
-    return window ? glfwWindowShouldClose(window->handle) : -1;
-}
-
-void cce_window_poll_events(void) {
-    glfwPollEvents();
+    return dest;
 }
 
 Window* cce_window_create(int width, int height, const char* title)
 {
-    printf("CCE | Creating OpenGL window: %dx%d '%s'\n", width, height, title);
+    glfwDefaultWindowHints();
     
-
+    glfwWindowHint(GLFW_VISIBLE, GLFW_TRUE);
+    glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
+    
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_TRUE); // Для macOS
-    glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
-    glfwWindowHint(GLFW_VISIBLE, GLFW_TRUE);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_COMPAT_PROFILE);
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_FALSE);
     
-    // Создание окна
     GLFWwindow* glfw_window = glfwCreateWindow(width, height, title, NULL, NULL);
-    if (!glfw_window) {
-        fprintf(stderr, "CCE | ❌ Failed to create OpenGL window\n");
+    
+    if (!glfw_window)
+    {
+        cce_printf("Trying OpenGL 2.1...\n");
+        glfwDefaultWindowHints();
+        glfwWindowHint(GLFW_VISIBLE, GLFW_TRUE);
+        glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
+        
+        glfw_window = glfwCreateWindow(width, height, title, NULL, NULL);
+        
+        if (!glfw_window)
+        {
+            cce_printf("❌ Failed to create OpenGL 2.1 window\n");
+            return NULL;
+        }
+    }
+    
+    glfwMakeContextCurrent(glfw_window);
+    
+    // const GLubyte* version = glGetString(GL_VERSION);
+    // const GLubyte* renderer = glGetString(GL_RENDERER);
+    // cce_printf( "OpenGL version: %s\n", version);
+    // cce_printf( "OpenGL renderer: %s\n", renderer);
+    
+    Window* window = malloc(sizeof(Window));
+    if (!window)
+    {
+        glfwDestroyWindow(glfw_window);
         return NULL;
     }
     
-    // Создание структуры окна
-    Window* window = malloc(sizeof(Window));
     window->handle = glfw_window;
     window->width = width;
     window->height = height;
-    window->title = title;
+    window->title = copy_string(title);
     
-    // Активируем контекст OpenGL
-    cce_window_make_current(window);
-    
-    printf("CCE | ✅ OpenGL window created successfully\n");
+    if (!window->title)
+    {
+        free(window);
+        glfwDestroyWindow(glfw_window);
+        return NULL;
+    }
+
+    cce_printf("✅ Window created: \"%s\"\n", window->title);
+
     return window;
+}
+
+void cce_window_destroy(Window* window)
+{
+    if (window)
+    {
+        cce_printf("Destroying window: \"%s\"\n", window->title);
+        if (window->handle) { glfwDestroyWindow(window->handle); }
+        if (window->title)  { free(window->title); }
+        free(window);
+    }
+}
+
+int cce_window_should_close(const Window* window)
+{
+    return window ? glfwWindowShouldClose(window->handle) : 1;
+}
+
+void cce_window_poll_events(void)
+{
+    glfwPollEvents();
+}
+
+void cce_window_swap_buffers(Window* window)
+{
+    if (window && window->handle) { glfwSwapBuffers(window->handle); }
+}
+
+void cce_window_make_current(Window* window)
+{
+    if (window && window->handle) { glfwMakeContextCurrent(window->handle); }
 }
