@@ -16,18 +16,18 @@ WBS
 ## List
 
 - ### GLFW
-- ### Vulkan
+- ### OpenGL
 
 ## Installation
 
 ### Ubuntu/Debian
 ```
-sudo apt install libglfw3-dev libvulkan-dev
+sudo apt install libglfw3-dev libgl1-mesa-dev
 ```
 
 ### Arch Linux
 ```
-sudo pacman -S glfw-x11 vulkan-headers vulkan-icd-loader
+sudo pacman -S glfw-x11 glfw-wayland mesa
 ```
 
 ---
