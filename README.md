@@ -1,6 +1,8 @@
 # CastleCore Engine
 
-![my badge](https://badgen.net/badge/License/GPL-3.0/blue?icon=opencollective)
+![license](https://badgen.net/badge/License/GPL-3.0/blue?icon=opencollective)
+![version](https://badgen.net/badge/Version/WBS/orange?icon=terminal)
+![wiki](https://badgen.net/badge/Wiki/WBS/purple?icon=wiki)
 
 ---
 
